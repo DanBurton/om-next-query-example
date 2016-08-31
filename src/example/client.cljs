@@ -7,12 +7,16 @@
 
 ;; https://github.com/omcljs/om/wiki/Quick-Start-(om.next)
 (om/defui HelloWorld
+  static om/IQuery
+  (query [_]
+    [:name])
+
   Object
   (render [this]
     (sablono/html
-      [:div "Hello, defui"])))
+      [:div (str "Hello, " (:name (om/props this)))])))
 
 (def hello (om/factory HelloWorld))
 
 (defn init []
-  (js/ReactDOM.render (hello) (gdom/getElement "app")))
+  (js/ReactDOM.render (hello {:name "Dan"}) (gdom/getElement "app")))

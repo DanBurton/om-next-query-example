@@ -8,7 +8,7 @@
    :build-ids ["dev"]
    :all-builds
    [{:id "dev"
-     :figwheel true
+     :figwheel {:on-jsload "example.client/init"}
      :source-paths ["src"]
      :compiler {:main "example.client"
                 :asset-path "/js/out"
