@@ -5,6 +5,18 @@
 
 (def foo "foo")
 
+(def names-list
+  ["Rebecca" "Jesse" "Molly"])
+
+(defn parser-read [env k params]
+  (when (= k :names)
+    (let [limit (:limit params)]
+      {:value (take limit names-list)})))
+
+(def parser
+  (om/parser
+    {:read parser-read}))
+
 ;; https://github.com/omcljs/om/wiki/Quick-Start-(om.next)
 (om/defui HelloWorld
   static om/IQueryParams
