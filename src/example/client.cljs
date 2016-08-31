@@ -17,6 +17,10 @@
   (om/parser
     {:read parser-read}))
 
+(def reconciler
+  (om/reconciler
+    {:parser parser}))
+
 ;; https://github.com/omcljs/om/wiki/Quick-Start-(om.next)
 (om/defui HelloWorld
   static om/IQueryParams
@@ -39,4 +43,4 @@
 (def hello (om/factory HelloWorld))
 
 (defn init []
-  (js/ReactDOM.render (hello {:names ["Ag" "Dan"]}) (gdom/getElement "app")))
+  (om/add-root! reconciler HelloWorld (gdom/getElement "app")))
