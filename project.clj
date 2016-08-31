@@ -3,6 +3,8 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.225"]
                  [org.omcljs/om "1.0.0-alpha41"]
+                 [com.cognitect/transit-clj "0.8.288"]
+                 [com.cognitect/transit-cljs "0.8.239"]
                  [sablono "0.7.4"]]
   :profiles {:dev {:source-paths ["dev" "src"]
                    :dependencies [[com.cemerick/piggieback "0.2.1"]

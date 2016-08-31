@@ -1,22 +1,21 @@
 (ns example.client
   (:require [goog.dom :as gdom]
             [om.next :as om]
-            [sablono.core :as sablono]))
+            [sablono.core :as sablono]
+            [cognitect.transit :as transit]))
 
 
-(defn fake-remote-parser-read [env k _params]
-  (case k
-    :server-time
-    {:value (str (js/Date))}
-
-    nil))
-
-(def fake-remote-parser
-  (om/parser {:read fake-remote-parser-read}))
+(defn cb-handler [cb e]
+  (let [response (transit/read (transit/reader :json)
+                               (.. e -currentTarget -responseText))]
+    (cb response)))
 
 (defn send [{query :remote} cb]
-  (cb (fake-remote-parser nil query)))
-
+  (let [request-body (transit/write (transit/writer :json) query)]
+    (doto (js/XMLHttpRequest.)
+      (.open "POST" "/om-query")
+      (.addEventListener "load" #(cb-handler cb %))
+      (.send request-body))))
 
 
 (def foo "foo")
